@@ -61,7 +61,7 @@ public class QueueLogAppender extends AbstractAppender {
         QUEUE_LOCK.writeLock().unlock();
 
         if(layout == null) {
-            layout = PatternLayout.newBuilder().build();
+            layout = PatternLayout.createLayout(null, null, null, null, null);
         }
 
         return new QueueLogAppender(name, filter, layout, ignoreExceptions, queue);

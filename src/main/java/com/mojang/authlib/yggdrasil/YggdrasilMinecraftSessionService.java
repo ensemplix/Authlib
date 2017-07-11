@@ -27,7 +27,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.net.InetAddress;
 import java.net.URL;
 import java.security.KeyFactory;
 import java.security.PublicKey;
@@ -82,14 +81,10 @@ public class YggdrasilMinecraftSessionService extends HttpMinecraftSessionServic
     }
 
     @Override
-    public GameProfile hasJoinedServer(GameProfile user, String serverId, InetAddress address) throws AuthenticationUnavailableException {
+    public GameProfile hasJoinedServer(GameProfile user, String serverId) throws AuthenticationUnavailableException {
         Map<String, Object> arguments = new HashMap<>();
         arguments.put("username", user.getName());
         arguments.put("serverId", serverId);
-
-        if(address != null) {
-            arguments.put("ip", address.getHostAddress());
-        }
 
         URL url = concatenateURL(CHECK_URL, buildQuery(arguments));
 
