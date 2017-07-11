@@ -57,13 +57,11 @@ public class QueueLogAppender extends AbstractAppender {
         }
 
         QUEUE_LOCK.writeLock().lock();
-
         BlockingQueue<String> queue = QUEUES.computeIfAbsent(target, k -> new LinkedBlockingQueue<>());
-
         QUEUE_LOCK.writeLock().unlock();
 
         if(layout == null) {
-            layout = PatternLayout.createLayout(null, null, null, null, null);
+            layout = PatternLayout.newBuilder().build();
         }
 
         return new QueueLogAppender(name, filter, layout, ignoreExceptions, queue);

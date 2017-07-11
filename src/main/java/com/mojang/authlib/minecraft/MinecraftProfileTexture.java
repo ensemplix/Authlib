@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class MinecraftProfileTexture {
 
+    public static final int PROFILE_TEXTURE_COUNT = Type.values().length;
+
     private final String url;
     private final Map<String, String> metadata;
     
@@ -42,7 +44,8 @@ public class MinecraftProfileTexture {
     
     public enum Type {
         SKIN, 
-        CAPE
+        CAPE,
+        ELYTRA
     }
 
 }

@@ -3,17 +3,19 @@ package com.mojang.authlib.minecraft;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 
+import java.net.InetAddress;
 import java.util.Map;
 
 public interface MinecraftSessionService {
 
-    void joinServer(GameProfile profile, String p1, String p2) throws AuthenticationException;
+    void joinServer(GameProfile profile, String authenticationToken, String serverId) throws AuthenticationException;
 
-    GameProfile hasJoinedServer(GameProfile profile, String p1) throws AuthenticationUnavailableException;
+    GameProfile hasJoinedServer(GameProfile profile, String serverId, InetAddress address) throws AuthenticationUnavailableException;
 
-    Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> getTextures(GameProfile p0, boolean p1);
+    Map<Type, MinecraftProfileTexture> getTextures(GameProfile profile, boolean requireSecure);
 
-    GameProfile fillProfileProperties(GameProfile profile, boolean p1);
+    GameProfile fillProfileProperties(GameProfile profile, boolean requireSecure);
 
 }
