@@ -1,68 +1,71 @@
 package com.mojang.authlib.legacy;
 
-import com.mojang.authlib.AuthenticationService;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import java.util.Map;
-import java.io.IOException;
-import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
-import com.mojang.authlib.exceptions.AuthenticationException;
-import java.util.HashMap;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.HttpAuthenticationService;
-import com.mojang.authlib.legacy.LegacyAuthenticationService;
-import java.net.URL;
+import com.mojang.authlib.exceptions.AuthenticationException;
+import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.minecraft.HttpMinecraftSessionService;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.mojang.authlib.HttpAuthenticationService.*;
 
 public class LegacyMinecraftSessionService extends HttpMinecraftSessionService
 {
     private static final String BASE_URL = "http://session.minecraft.net/game/";
-    private static final URL JOIN_URL;
-    private static final URL CHECK_URL;
+    private static final URL JOIN_URL = constantURL("http://session.minecraft.net/game/joinserver.jsp");
+    private static final URL CHECK_URL = constantURL("http://session.minecraft.net/game/checkserver.jsp");
     
-    protected LegacyMinecraftSessionService(final LegacyAuthenticationService authenticationService) {
+    protected LegacyMinecraftSessionService(LegacyAuthenticationService authenticationService) {
         super(authenticationService);
     }
     
     @Override
-    public void joinServer(final GameProfile profile, final String authenticationToken, final String serverId) throws AuthenticationException {
-        final Map<String, Object> arguments = new HashMap<String, Object>();
+    public void joinServer(GameProfile profile, String authenticationToken, String serverId) throws AuthenticationException {
+        Map<String, Object> arguments = new HashMap<>();
         arguments.put("user", profile.getName());
         arguments.put("sessionId", authenticationToken);
         arguments.put("serverId", serverId);
-        final URL url = HttpAuthenticationService.concatenateURL(LegacyMinecraftSessionService.JOIN_URL, HttpAuthenticationService.buildQuery(arguments));
+
+        URL url = concatenateURL(JOIN_URL, buildQuery(arguments));
+
         try {
-            final String response = this.getAuthenticationService().performGetRequest(url);
-            if (!response.equals("OK")) {
+            String response = getAuthenticationService().performGetRequest(url);
+
+            if(!response.equals("OK")) {
                 throw new AuthenticationException(response);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new AuthenticationUnavailableException(e);
         }
     }
     
     @Override
-    public GameProfile hasJoinedServer(final GameProfile user, final String serverId) throws AuthenticationUnavailableException {
-        final Map<String, Object> arguments = new HashMap<String, Object>();
+    public GameProfile hasJoinedServer(GameProfile user, String serverId) throws AuthenticationUnavailableException {
+        Map<String, Object> arguments =  new HashMap<>();
         arguments.put("user", user.getName());
         arguments.put("serverId", serverId);
-        final URL url = HttpAuthenticationService.concatenateURL(LegacyMinecraftSessionService.CHECK_URL, HttpAuthenticationService.buildQuery(arguments));
+
+        URL url = concatenateURL(CHECK_URL, buildQuery(arguments));
+
         try {
-            final String response = this.getAuthenticationService().performGetRequest(url);
+            String response = getAuthenticationService().performGetRequest(url);
             return response.equals("YES") ? user : null;
-        }
-        catch (IOException e) {
+        } catch(IOException e) {
             throw new AuthenticationUnavailableException(e);
         }
     }
     
     @Override
-    public Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> getTextures(final GameProfile profile, final boolean requireSecure) {
-        return new HashMap<MinecraftProfileTexture.Type, MinecraftProfileTexture>();
+    public Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> getTextures(GameProfile profile, boolean requireSecure) {
+        return new HashMap<>();
     }
     
     @Override
-    public GameProfile fillProfileProperties(final GameProfile profile, final boolean requireSecure) {
+    public GameProfile fillProfileProperties(GameProfile profile, boolean requireSecure) {
         return profile;
     }
     
@@ -70,9 +73,5 @@ public class LegacyMinecraftSessionService extends HttpMinecraftSessionService
     public LegacyAuthenticationService getAuthenticationService() {
         return (LegacyAuthenticationService)super.getAuthenticationService();
     }
-    
-    static {
-        JOIN_URL = HttpAuthenticationService.constantURL("http://session.minecraft.net/game/joinserver.jsp");
-        CHECK_URL = HttpAuthenticationService.constantURL("http://session.minecraft.net/game/checkserver.jsp");
-    }
+
 }

@@ -5,41 +5,44 @@ import org.apache.commons.io.FilenameUtils;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class MinecraftProfileTexture
-{
+public class MinecraftProfileTexture {
+
     private final String url;
     private final Map<String, String> metadata;
     
-    public MinecraftProfileTexture(final String url, final Map<String, String> metadata) {
-        super();
+    public MinecraftProfileTexture(String url, Map<String, String> metadata) {
         this.url = url;
         this.metadata = metadata;
     }
     
     public String getUrl() {
-        return this.url;
+        return url;
     }
     
     @Nullable
-    public String getMetadata(final String key) {
-        if (this.metadata == null) {
+    public String getMetadata(String key) {
+        if (metadata == null) {
             return null;
         }
-        return this.metadata.get(key);
+
+        return metadata.get(key);
     }
     
     public String getHash() {
-        return FilenameUtils.getBaseName(this.url);
+        return FilenameUtils.getBaseName(url);
     }
     
     @Override
     public String toString() {
-        return new ToStringBuilder((Object)this).append("url", (Object)this.url).append("hash", (Object)this.getHash()).toString();
+        return new ToStringBuilder(this)
+                .append("url", this.url)
+                .append("hash", this.getHash())
+                .toString();
     }
     
-    public enum Type
-    {
+    public enum Type {
         SKIN, 
-        CAPE;
+        CAPE
     }
+
 }

@@ -1,9 +1,7 @@
 package com.mojang.authlib.exceptions;
 
-import com.mojang.authlib.exceptions.InvalidCredentialsException;
+public class UserMigratedException extends InvalidCredentialsException {
 
-public class UserMigratedException extends InvalidCredentialsException
-{
     public UserMigratedException() {
         super();
     }
@@ -19,4 +17,5 @@ public class UserMigratedException extends InvalidCredentialsException
     public UserMigratedException(final Throwable cause) {
         super(cause);
     }
+
 }

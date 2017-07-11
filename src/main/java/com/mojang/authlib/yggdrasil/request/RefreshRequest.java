@@ -3,20 +3,18 @@ package com.mojang.authlib.yggdrasil.request;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 import com.mojang.authlib.GameProfile;
 
-public class RefreshRequest
-{
-    private String clientToken;
-    private String accessToken;
-    private GameProfile selectedProfile;
-    private boolean requestUser;
+public class RefreshRequest {
+
+    private final String clientToken;
+    private final String accessToken;
+    private final GameProfile selectedProfile;
+    private final boolean requestUser = true;
     
-    public RefreshRequest(final YggdrasilUserAuthentication authenticationService) {
+    public RefreshRequest(YggdrasilUserAuthentication authenticationService) {
         this(authenticationService, null);
     }
     
-    public RefreshRequest(final YggdrasilUserAuthentication authenticationService, final GameProfile profile) {
-        super();
-        this.requestUser = true;
+    public RefreshRequest(YggdrasilUserAuthentication authenticationService, GameProfile profile) {
         this.clientToken = authenticationService.getAuthenticationService().getClientToken();
         this.accessToken = authenticationService.getAuthenticatedToken();
         this.selectedProfile = profile;

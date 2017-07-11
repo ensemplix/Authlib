@@ -1,13 +1,12 @@
 package com.mojang.authlib;
 
-import com.mojang.authlib.UserType;
-import com.mojang.authlib.properties.PropertyMap;
-import java.util.Map;
-import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.exceptions.AuthenticationException;
+import com.mojang.authlib.properties.PropertyMap;
 
-public interface UserAuthentication
-{
+import java.util.Map;
+
+public interface UserAuthentication {
+
     boolean canLogIn();
     
     void logIn() throws AuthenticationException;
@@ -22,15 +21,15 @@ public interface UserAuthentication
     
     GameProfile getSelectedProfile();
     
-    void selectGameProfile(GameProfile p0) throws AuthenticationException;
+    void selectGameProfile(GameProfile profile) throws AuthenticationException;
     
-    void loadFromStorage(Map<String, Object> p0);
+    void loadFromStorage(Map<String, Object> credentials);
     
     Map<String, Object> saveForStorage();
     
-    void setUsername(String p0);
+    void setUsername(String username);
     
-    void setPassword(String p0);
+    void setPassword(String password);
     
     String getAuthenticatedToken();
     
@@ -39,4 +38,5 @@ public interface UserAuthentication
     PropertyMap getUserProperties();
     
     UserType getUserType();
+
 }

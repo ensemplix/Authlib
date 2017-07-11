@@ -1,20 +1,21 @@
 package com.mojang.authlib.exceptions;
 
-public class AuthenticationException extends Exception
-{
+public class AuthenticationException extends Exception {
+
     public AuthenticationException() {
         super();
     }
     
-    public AuthenticationException(final String message) {
+    public AuthenticationException(String message) {
         super(message);
     }
     
-    public AuthenticationException(final String message, final Throwable cause) {
+    public AuthenticationException(String message, Throwable cause) {
         super(message, cause);
     }
     
-    public AuthenticationException(final Throwable cause) {
+    public AuthenticationException(Throwable cause) {
         super(cause);
     }
+
 }

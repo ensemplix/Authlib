@@ -1,33 +1,28 @@
 package com.mojang.authlib;
 
-public class Agent
-{
-    public static final Agent MINECRAFT;
-    public static final Agent SCROLLS;
+public class Agent {
+
+    public static final Agent MINECRAFT = new Agent("Minecraft", 1);
+    public static final Agent SCROLLS = new Agent("Scrolls", 1);
     private final String name;
     private final int version;
     
-    public Agent(final String name, final int version) {
-        super();
+    public Agent(String name, int version) {
         this.name = name;
         this.version = version;
     }
     
     public String getName() {
-        return this.name;
+        return name;
     }
     
     public int getVersion() {
-        return this.version;
+        return version;
     }
     
     @Override
     public String toString() {
-        return "Agent{name='" + this.name + '\'' + ", version=" + this.version + '}';
+        return "Agent{name='" + name + '\'' + ", version=" + version + '}';
     }
-    
-    static {
-        MINECRAFT = new Agent("Minecraft", 1);
-        SCROLLS = new Agent("Scrolls", 1);
-    }
+
 }

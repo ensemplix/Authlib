@@ -1,24 +1,25 @@
 package com.mojang.authlib.yggdrasil.response;
 
 import com.mojang.authlib.properties.PropertyMap;
-import java.util.UUID;
-import com.mojang.authlib.yggdrasil.response.Response;
 
-public class MinecraftProfilePropertiesResponse extends Response
-{
+import java.util.UUID;
+
+public class MinecraftProfilePropertiesResponse extends Response {
+
     private UUID id;
     private String name;
     private PropertyMap properties;
     
     public UUID getId() {
-        return this.id;
+        return id;
     }
     
     public String getName() {
-        return this.name;
+        return name;
     }
     
     public PropertyMap getProperties() {
-        return this.properties;
+        return properties;
     }
+
 }
